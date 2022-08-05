@@ -1,0 +1,43 @@
+@use "styles/variables" as *;
+
+.wrapper {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 64px;
+  height: 100%;
+  background-color: $secondary;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 60px 0;
+
+    .item {
+      @include noDrag;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 64px;
+      padding: 0 16px;
+      text-transform: uppercase;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $tertiary;
+      }
+    }
+  }
+}

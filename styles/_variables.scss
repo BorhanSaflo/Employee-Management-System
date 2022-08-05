@@ -1,0 +1,47 @@
+//Colors
+$primary: #161c26;
+$secondary: #1f2937;
+$tertiary: #0f192c;
+
+//Screen Sizes
+$xl: 1279px;
+$lg: 1024px;
+$md: 768px;
+
+@mixin xl {
+  @media (min-width: $xl) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (min-width: $lg) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (min-width: $md) {
+    @content;
+  }
+}
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin noDrag {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -khtml-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}

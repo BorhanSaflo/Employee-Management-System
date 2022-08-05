@@ -1,3 +1,5 @@
+@use "styles/variables" as *;
+
 html,
 body {
   padding: 0;
@@ -21,6 +23,6 @@ a {
   }
   body {
     color: white;
-    background: black;
+    background: $primary;
   }
 }
