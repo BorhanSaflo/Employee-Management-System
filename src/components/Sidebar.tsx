@@ -1,5 +1,5 @@
 import React from "react";
-import { getIcon } from "../lib/getIcon";
+import { getIcon } from "../utils/getIcon";
 import styles from "../styles/Sidebar.module.scss";
 
 function Sidebar() {
