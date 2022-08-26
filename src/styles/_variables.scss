@@ -8,6 +8,9 @@ $xl: 1279px;
 $lg: 1024px;
 $md: 768px;
 
+$headerHeight: 64px;
+$footerHeight: 100px;
+
 @mixin xl {
   @media (min-width: $xl) {
     @content;

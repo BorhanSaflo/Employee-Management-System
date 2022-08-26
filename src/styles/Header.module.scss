@@ -1,0 +1,30 @@
+@use "variables" as *;
+
+.wrapper {
+  @include flexCenter;
+  justify-content: space-between;
+  padding: 0 5em;
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+  height: $headerHeight;
+  background-color: $secondary;
+  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+}
+
+.accountContainer {
+  @include flexCenter;
+  gap: 0.5em;
+}
+
+.button {
+  @include noDrag;
+  cursor: pointer;
+  border: #fff 1px solid;
+  border-radius: 5px;
+  background-color: $primary;
+  color: #fff;
+  font-size: 1em;
+  padding: 0.5em 1em;
+  transition: color 0.25s ease-in-out;
+}
