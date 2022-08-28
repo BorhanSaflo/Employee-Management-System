@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { trpc } from "../utils/trpc";
-import Sidebar from "../components/Sidebar";
+import { trpc } from "@/utils/trpc";
+import Sidebar from "@/components/Sidebar";
 import styles from "@/styles/Dashboard.module.scss";
 import { useSession, getSession } from "next-auth/react";
 import Header from "@/components/Header";

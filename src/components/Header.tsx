@@ -8,6 +8,9 @@ function Header() {
   return (
     <div className={styles.wrapper}>
       <span>Employee Management System</span>
+      <a className={styles.button} href="/dashboard">
+        Dashboard
+      </a>
       <div className={styles.accountContainer}>
         {session ? (
           <>
