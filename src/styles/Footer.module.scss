@@ -5,8 +5,8 @@
   flex-direction: column;
   width: 100%;
   height: $footerHeight;
-  background-color: $secondary;
-  color: #fff;
+  background-color: var(--backgroundTertiary);
+  border-top: 1px solid var(--borderPrimary);
   font-size: 1em;
   text-align: center;
 }

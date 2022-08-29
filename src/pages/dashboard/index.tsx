@@ -4,19 +4,9 @@ import { trpc } from "@/utils/trpc";
 import Sidebar from "@/components/Sidebar";
 import styles from "@/styles/Dashboard.module.scss";
 import { useSession, getSession } from "next-auth/react";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 
-const Home: NextPage = () => {
-  const { data: session, status } = useSession();
-
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
-
-  if (status === "unauthenticated") {
-    return <p>Access Denied</p>;
-  }
-
+const Dashboard: NextPage = ({ session }: any) => {
   return (
     <>
       <Head>
@@ -32,4 +22,24 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export const getServerSideProps = async (ctx: any) => {
+  const session = await getSession(ctx);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+      props: {},
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+};
+
+export default Dashboard;

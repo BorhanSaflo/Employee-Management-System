@@ -1,11 +1,35 @@
 @use "variables" as *;
 
+:root {
+  --backgroundPrimary: #{$primaryDark};
+  --backgroundSecondary: #{$secondaryDark};
+  --backgroundTertiary: #{$tertiaryDark};
+  --foregroundPrimary: #{$primaryLight};
+  --foregroundSecondary: #{$secondaryLight};
+  --foregroundTertiary: #{$tertiaryLight};
+
+  --borderPrimary: #434956;
+}
+
+[data-theme="light"] {
+  --backgroundPrimary: #{$primaryLight};
+  --backgroundSecondary: #{$secondaryLight};
+  --backgroundTertiary: #{$tertiaryLight};
+  --foregroundPrimary: #{$primaryDark};
+  --foregroundSecondary: #{$secondaryDark};
+  --foregroundTertiary: #{$tertiaryDark};
+
+  --borderPrimary: #e5e7eb;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: var(--backgroundSecondary);
+  color: var(--foregroundPrimary);
 }
 
 a {
@@ -17,12 +41,18 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: $primary;
+.button {
+  @include noDrag;
+  cursor: pointer;
+  border: var(--foregroundPrimary) 1px solid;
+  border-radius: 5px;
+  background-color: var(--backgroundPrimary);
+  font-size: 1em;
+  padding: 0.5em 1em;
+  transition: background-color 0.25s;
+  text-align: center;
+
+  &:hover {
+    background-color: var(--backgroundSecondary);
   }
 }

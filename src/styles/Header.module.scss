@@ -8,8 +8,8 @@
   z-index: 99;
   width: 100%;
   height: $headerHeight;
-  background-color: $secondary;
-  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+  background-color: var(--backgroundTertiary);
+  border-bottom: 1px solid var(--borderPrimary);
 }
 
 .accountContainer {
@@ -17,19 +17,45 @@
   gap: 0.5em;
 }
 
-.button {
-  @include noDrag;
-  cursor: pointer;
-  border: #fff 1px solid;
-  border-radius: 5px;
-  background-color: $primary;
-  color: #fff;
-  font-size: 1em;
-  padding: 0.5em 1em;
-  transition: color 0.25s ease-in-out;
-}
-
 .profilePicture {
   border-radius: 50%;
   background-color: #fff;
+}
+
+.title {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.account {
+  @include flexCenter;
+  @include noDrag;
+  gap: 0.5em;
+  transition: background-color 0.25s ease-in-out;
+  padding: 0.25em 0.5em;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1;
+
+  &:hover {
+    background-color: var(--backgroundPrimary);
+  }
+}
+
+.dropdownContainer {
+  @include flexCenter;
+  flex-direction: column;
+  gap: 0.5em;
+  position: absolute;
+  top: 100%;
+  background-color: var(--backgroundSecondary);
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  border: 1px solid var(--borderPrimary);
+  width: 100%;
+  align-items: stretch;
+}
+
+.dropdownWrapper {
+  position: relative;
 }

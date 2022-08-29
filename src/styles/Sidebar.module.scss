@@ -9,7 +9,8 @@
   justify-content: space-between;
   width: 64px;
   height: 100%;
-  background-color: $secondary;
+  background-color: var(--backgroundTertiary);
+  border-right: 1px solid var(--borderPrimary);
 
   .container {
     display: flex;
@@ -29,14 +30,13 @@
       height: 64px;
       padding: 0 16px;
       text-transform: uppercase;
-      color: #fff;
       font-size: 1.5rem;
       font-weight: bold;
       transition: all 0.2s ease-in-out;
       cursor: pointer;
 
       &:hover {
-        background-color: $tertiary;
+        background-color: var(--backgroundTertiary);
       }
     }
   }
