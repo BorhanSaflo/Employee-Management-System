@@ -52,3 +52,22 @@ $footerHeight: 100px;
   -o-user-drag: none;
   user-drag: none;
 }
+
+@mixin button($foreground, $background, $backgroundSecondary) {
+  @include flexCenter;
+  @include noDrag;
+  gap: 0.4em;
+  cursor: pointer;
+  border: $foreground 1px solid;
+  border-radius: 5px;
+  font-size: 1em;
+  padding: 0.5em 1em;
+  transition: background-color 0.25s ease;
+  text-align: center;
+  background-color: $background;
+  color: $foreground;
+
+  &:hover {
+    background-color: $backgroundSecondary;
+  }
+}

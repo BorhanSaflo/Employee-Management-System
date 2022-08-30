@@ -23,8 +23,15 @@
 }
 
 .title {
+  @include flexCenter;
+  gap: 0.5em;
   font-size: 1.1em;
   font-weight: bold;
+
+  .logo {
+    width: 1.6em;
+    height: 1.6em;
+  }
 }
 
 .account {
@@ -47,13 +54,34 @@
   flex-direction: column;
   gap: 0.5em;
   position: absolute;
-  top: 100%;
+  top: calc(100% + 10px);
   background-color: var(--backgroundSecondary);
   padding: 0.5em 1em;
   border-radius: 5px;
   border: 1px solid var(--borderPrimary);
   width: 100%;
   align-items: stretch;
+
+  &:after,
+  &:before {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid var(--backgroundSecondary);
+    top: -10px;
+    content: "";
+    left: 50%;
+    margin-left: -10px;
+    position: absolute;
+  }
+
+  &:before {
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-bottom: 11px solid;
+    border-bottom-color: inherit;
+    top: -11px;
+    margin-left: -11px;
+  }
 }
 
 .dropdownWrapper {

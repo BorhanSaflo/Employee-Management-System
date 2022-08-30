@@ -42,17 +42,13 @@ a {
 }
 
 .button {
-  @include noDrag;
-  cursor: pointer;
-  border: var(--foregroundPrimary) 1px solid;
-  border-radius: 5px;
-  background-color: var(--backgroundPrimary);
-  font-size: 1em;
-  padding: 0.5em 1em;
-  transition: background-color 0.25s;
-  text-align: center;
+  @include button(
+    var(--foregroundPrimary),
+    var(--backgroundPrimary),
+    var(--backgroundSecondary)
+  );
+}
 
-  &:hover {
-    background-color: var(--backgroundSecondary);
-  }
+.dangerButton {
+  @include button(#ef4444, rgba(#f87171, 15%), rgba(#f87171, 25%));
 }

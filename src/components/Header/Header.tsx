@@ -5,13 +5,20 @@ import Link from "next/link";
 import Account from "./Account";
 import DropdownMenu from "./DropdownMenu";
 import ThemeChanger from "./ThemeChanger";
+import { getIcon } from "@/utils/getIcon";
 
 function Header() {
   const { data: session, status } = useSession();
+  const Logo = getIcon("group");
+  const SignOutIcon = getIcon("signOut");
+
   return (
     <div className={styles.wrapper}>
       <Link href={"/"} passHref>
-        <a className={styles.title}>{"Employee Management System"}</a>
+        <a className={styles.title}>
+          <Logo className={styles.logo} />
+          Employee Management System
+        </a>
       </Link>
       <div className={styles.accountContainer}>
         {session ? (
@@ -23,7 +30,8 @@ function Header() {
                 <a className="button" href="/dashboard">
                   Dashboard
                 </a>
-                <button className="button" onClick={() => signOut()}>
+                <button className="dangerButton" onClick={() => signOut()}>
+                  <SignOutIcon />
                   Sign out
                 </button>
               </DropdownMenu>

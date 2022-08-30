@@ -16,6 +16,7 @@
     "@trpc/next": "^9.27.1",
     "@trpc/react": "^9.27.1",
     "@trpc/server": "^9.27.1",
+    "framer-motion": "^7.2.1",
     "next": "12.2.5",
     "next-auth": "^4.10.3",
     "next-themes": "^0.2.0",
