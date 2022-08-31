@@ -2,22 +2,18 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
     previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-    provider = "mysql"
+    provider             = "mysql"
     // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.text annotations in model Account below
     // Further reading: 
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
+    url                  = env("DATABASE_URL")
     referentialIntegrity = "prisma"
-}
-
-model Example {
-    id String @id @default(cuid())
 }
 
 // Necessary for Next auth
@@ -55,6 +51,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    companies     Company[]
 }
 
 model VerificationToken {
@@ -63,4 +60,22 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Company {
+    id        String     @id @default(cuid())
+    name      String
+    createdAt DateTime   @default(now())
+    user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String
+    Employee  Employee[]
+}
+
+model Employee {
+    id        String   @id @default(cuid())
+    firstName String
+    lastName  String
+    createdAt DateTime @default(now())
+    company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    companyId String
 }

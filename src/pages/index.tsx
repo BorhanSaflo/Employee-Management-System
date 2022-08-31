@@ -8,11 +8,6 @@ import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 
 const Home: NextPage = () => {
-  const { data, isLoading } = trpc.useQuery([
-    "example.hello",
-    { text: "from tRPC" },
-  ]);
-
   return (
     <>
       <Head>
@@ -22,7 +17,7 @@ const Home: NextPage = () => {
       <Header />
       <main>
         <div className={styles.wrapper}>
-          <div>{data ? <p>{data.greeting}</p> : <p>Loading..</p>}</div>
+          <div>Hello World</div>
         </div>
       </main>
       <Footer />

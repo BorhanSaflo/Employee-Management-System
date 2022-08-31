@@ -5,8 +5,12 @@ import Sidebar from "@/components/Sidebar";
 import styles from "@/styles/Dashboard.module.scss";
 import { useSession, getSession } from "next-auth/react";
 import Header from "@/components/Header/Header";
+import { getIcon } from "@/utils/getIcon";
 
 const Dashboard: NextPage = ({ session }: any) => {
+  const { data: companies, isLoading } = trpc.useQuery(["company.getAll"]);
+  const AddIcon = getIcon("add");
+
   return (
     <>
       <Head>
@@ -16,7 +20,22 @@ const Dashboard: NextPage = ({ session }: any) => {
       <Header />
       <Sidebar />
       <div className={styles.wrapper}>
-        <h1 className={styles.title}>Employee Management System</h1>
+        <h1 className={styles.title}>Companies</h1>
+        <div className={styles.companiesContainer}>
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            companies?.map((company: any) => (
+              <div key={company.id} className={styles.company}>
+                <div className={styles.companyName}>{company.name}</div>
+              </div>
+            ))
+          )}
+          <div className={styles.company}>
+            <AddIcon className={styles.addIcon} />
+            <span>Add Company</span>
+          </div>
+        </div>
       </div>
     </>
   );

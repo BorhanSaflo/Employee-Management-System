@@ -1,6 +1,6 @@
 import { IconType } from "react-icons";
 import { HiPlus } from "react-icons/hi";
-import { MdDashboard } from "react-icons/md";
+import { MdAdd, MdDashboard } from "react-icons/md";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import { GrStatusUnknown } from "react-icons/gr";
 import { GoChevronDown } from "react-icons/go";
@@ -14,6 +14,7 @@ const icons = new Map<string, IconType>([
   ["downArrow", GoChevronDown],
   ["group", FaUsers],
   ["signOut", BiLogIn],
+  ["add", MdAdd],
 ]);
 
 export const getIcon = (name: string) => {
