@@ -8,8 +8,36 @@ import Header from "@/components/Header/Header";
 import { getIcon } from "@/utils/getIcon";
 
 const Dashboard: NextPage = ({ session }: any) => {
-  const { data: companies, isLoading } = trpc.useQuery(["company.getAll"]);
+  const {
+    data: companies,
+    refetch: refetchCompanies,
+    isFetching,
+  } = trpc.useQuery(["company.getAll"], {
+    refetchInterval: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+  const createCompanyMutation = trpc.useMutation(["company.create"]);
+  const deleteCompanyMutation = trpc.useMutation(["company.delete"]);
   const AddIcon = getIcon("add");
+
+  const deleteCompany = async (id: string) => {
+    await deleteCompanyMutation.mutate(
+      { id },
+      {
+        onSuccess: () => refetchCompanies(),
+      }
+    );
+  };
+
+  const createCompany = (name: string) => {
+    createCompanyMutation.mutate(
+      { name },
+      {
+        onSuccess: () => refetchCompanies(),
+      }
+    );
+  };
 
   return (
     <>
@@ -22,16 +50,22 @@ const Dashboard: NextPage = ({ session }: any) => {
       <div className={styles.wrapper}>
         <h1 className={styles.title}>Companies</h1>
         <div className={styles.companiesContainer}>
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : (
-            companies?.map((company: any) => (
-              <div key={company.id} className={styles.company}>
-                <div className={styles.companyName}>{company.name}</div>
+          {companies?.map((company) => (
+            <div
+              key={company.id}
+              className={styles.company}
+              onClick={() => deleteCompany(company.id)}>
+              <div className={styles.companyName}>
+                <div>{company.name}</div>
+                <div>Employees: {company._count.employees}</div>
               </div>
-            ))
-          )}
-          <div className={styles.company}>
+            </div>
+          ))}
+          <div
+            className={styles.company}
+            onClick={() =>
+              createCompany(`Company #${Math.floor(Math.random() * 1000)}`)
+            }>
             <AddIcon className={styles.addIcon} />
             <span>Add Company</span>
           </div>
