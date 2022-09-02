@@ -6,6 +6,7 @@ import Account from "./Account";
 import DropdownMenu from "./DropdownMenu";
 import ThemeChanger from "./ThemeChanger";
 import { getIcon } from "@/utils/getIcon";
+import { fullWidthClassName } from "react-remove-scroll-bar";
 
 function Header() {
   const { data: session, status } = useSession();
@@ -14,35 +15,37 @@ function Header() {
 
   return (
     <div className={styles.wrapper}>
-      <Link href={"/"} passHref>
-        <a className={styles.title}>
-          <Logo className={styles.logo} />
-          Employee Management System
-        </a>
-      </Link>
-      <div className={styles.accountContainer}>
-        {session ? (
-          <>
-            <Account
-              username={session.user?.name}
-              userProfilePicture={session.user?.image!}>
-              <DropdownMenu>
-                <a className="button" href="/dashboard">
-                  Dashboard
-                </a>
-                <button className="dangerButton" onClick={() => signOut()}>
-                  <SignOutIcon />
-                  Sign out
-                </button>
-              </DropdownMenu>
-            </Account>
-          </>
-        ) : (
-          <button className="button" onClick={() => signIn("google")}>
-            Sign in
-          </button>
-        )}
-        <ThemeChanger />
+      <div className={`${styles.container} ${fullWidthClassName}`}>
+        <Link href={"/"} passHref>
+          <a className={styles.title}>
+            <Logo className={styles.logo} />
+            Employee Management System
+          </a>
+        </Link>
+        <div className={styles.accountContainer}>
+          {session ? (
+            <>
+              <Account
+                username={session.user?.name}
+                userProfilePicture={session.user?.image!}>
+                <DropdownMenu>
+                  <a className="button" href="/dashboard">
+                    Dashboard
+                  </a>
+                  <button className="dangerButton" onClick={() => signOut()}>
+                    <SignOutIcon />
+                    Sign out
+                  </button>
+                </DropdownMenu>
+              </Account>
+            </>
+          ) : (
+            <button className="button" onClick={() => signIn("google")}>
+              Sign in
+            </button>
+          )}
+          <ThemeChanger />
+        </div>
       </div>
     </div>
   );

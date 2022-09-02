@@ -3,8 +3,9 @@
 .wrapper {
   display: flex;
   position: fixed;
-  top: 0;
+  top: $headerHeight;
   left: 0;
+  z-index: 99;
   flex-direction: column;
   justify-content: space-between;
   width: $sidebarWidth;

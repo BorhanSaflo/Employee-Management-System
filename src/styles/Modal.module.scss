@@ -1,0 +1,57 @@
+@use "variables" as *;
+
+.backdrop {
+  @include flexCenter;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #000000e1;
+  z-index: 100;
+
+  .modal {
+    display: flex;
+    flex-direction: column;
+    width: clamp(35%, 550px, 90%);
+    height: min(50%, 500px);
+    border-radius: 5px;
+    background-color: var(--backgroundSecondary);
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 1em 1.5em;
+      border-bottom: 1px solid var(--borderPrimary);
+
+      .title {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      .closeButton {
+        border-radius: 50%;
+        width: 2.25em;
+        height: 2.25em;
+        padding: 0.5em;
+        margin: -0.5em;
+        transition: background-color 0.25s ease;
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--backgroundTertiary);
+        }
+      }
+    }
+
+    .body {
+      @include flexCenter;
+      width: 100%;
+      height: 100%;
+      padding: 1em;
+      overflow-y: auto;
+    }
+  }
+}

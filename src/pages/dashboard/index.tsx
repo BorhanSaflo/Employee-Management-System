@@ -6,20 +6,22 @@ import styles from "@/styles/Dashboard.module.scss";
 import { useSession, getSession } from "next-auth/react";
 import Header from "@/components/Header/Header";
 import { getIcon } from "@/utils/getIcon";
+import Modal from "@/components/Modal/Modal";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 
 const Dashboard: NextPage = ({ session }: any) => {
+  // Companies Handling
   const {
     data: companies,
     refetch: refetchCompanies,
     isFetching,
   } = trpc.useQuery(["company.getAll"], {
     refetchInterval: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
   });
+
   const createCompanyMutation = trpc.useMutation(["company.create"]);
   const deleteCompanyMutation = trpc.useMutation(["company.delete"]);
-  const AddIcon = getIcon("add");
 
   const deleteCompany = async (id: string) => {
     await deleteCompanyMutation.mutate(
@@ -37,7 +39,40 @@ const Dashboard: NextPage = ({ session }: any) => {
         onSuccess: () => refetchCompanies(),
       }
     );
+    close();
   };
+
+  //Modal
+  const [modalOpen, setModalOpen] = useState(false);
+  const close = () => setModalOpen(false);
+  const open = () => setModalOpen(true);
+
+  // Animation
+  const itemTransition = {
+    hidden: {
+      scale: 0.5,
+      opacity: 0,
+    },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 0.25,
+        ease: "linear",
+      },
+    },
+    exit: {
+      scale: 0.8,
+      opacity: 0,
+      transition: {
+        duration: 0.25,
+        ease: "linear",
+      },
+    },
+  };
+
+  //Icons
+  const AddIcon = getIcon("add");
 
   return (
     <>
@@ -49,27 +84,44 @@ const Dashboard: NextPage = ({ session }: any) => {
       <Sidebar />
       <div className={styles.wrapper}>
         <h1 className={styles.title}>Companies</h1>
-        <div className={styles.companiesContainer}>
-          {companies?.map((company) => (
-            <div
-              key={company.id}
+        <ul className={styles.companiesContainer}>
+          <AnimatePresence>
+            {companies?.map((company) => (
+              <motion.li
+                key={company.id}
+                className={styles.company}
+                variants={itemTransition}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                layout
+                onClick={() => deleteCompany(company.id)}>
+                <div className={styles.companyName}>
+                  <div>{company.name}</div>
+                  <div>Employees: {company._count.employees}</div>
+                </div>
+              </motion.li>
+            ))}
+            <motion.li
               className={styles.company}
-              onClick={() => deleteCompany(company.id)}>
-              <div className={styles.companyName}>
-                <div>{company.name}</div>
-                <div>Employees: {company._count.employees}</div>
-              </div>
-            </div>
-          ))}
-          <div
-            className={styles.company}
-            onClick={() =>
-              createCompany(`Company #${Math.floor(Math.random() * 1000)}`)
-            }>
-            <AddIcon className={styles.addIcon} />
-            <span>Add Company</span>
-          </div>
-        </div>
+              variants={itemTransition}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              layout
+              onClick={() => (modalOpen ? close() : open())}>
+              <AddIcon className={styles.addIcon} />
+              <span>Add Company</span>
+            </motion.li>
+          </AnimatePresence>
+        </ul>
+        <Modal status={modalOpen} handleClose={close} title={"Add Company"}>
+          <button
+            className="button"
+            onClick={() => createCompany("Test Company")}>
+            Add Company
+          </button>
+        </Modal>
       </div>
     </>
   );
