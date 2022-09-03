@@ -19,7 +19,7 @@
   --foregroundSecondary: #{$secondaryDark};
   --foregroundTertiary: #{$tertiaryDark};
 
-  --borderPrimary: #e5e7eb;
+  --borderPrimary: hsl(220, 12%, 83%);
 }
 
 html,
@@ -62,4 +62,9 @@ a {
 
 .dangerButton {
   @include button(#ef4444, rgba(#f87171, 15%), rgba(#f87171, 25%));
+}
+
+.centerRow {
+  @include flexCenter;
+  width: 100%;
 }

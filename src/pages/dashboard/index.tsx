@@ -40,12 +40,15 @@ const Dashboard: NextPage = ({ session }: any) => {
       }
     );
     close();
+    setCompanyName("");
   };
 
   //Modal
   const [modalOpen, setModalOpen] = useState(false);
   const close = () => setModalOpen(false);
   const open = () => setModalOpen(true);
+
+  const [companyName, setCompanyName] = useState("");
 
   // Animation
   const itemTransition = {
@@ -116,11 +119,23 @@ const Dashboard: NextPage = ({ session }: any) => {
           </AnimatePresence>
         </ul>
         <Modal status={modalOpen} handleClose={close} title={"Add Company"}>
-          <button
-            className="button"
-            onClick={() => createCompany("Test Company")}>
-            Add Company
-          </button>
+          <label className={styles.label} htmlFor="companyName">
+            Company Name
+            <input
+              type="text"
+              value={companyName}
+              onChange={(e) => {
+                setCompanyName(e.target.value);
+              }}
+            />
+          </label>
+          <div className="centerRow">
+            <button
+              className="button"
+              onClick={() => createCompany(companyName)}>
+              Add Company
+            </button>
+          </div>
         </Modal>
       </div>
     </>
