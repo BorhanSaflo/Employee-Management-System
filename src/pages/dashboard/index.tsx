@@ -3,14 +3,17 @@ import Head from "next/head";
 import { trpc } from "@/utils/trpc";
 import Sidebar from "@/components/Sidebar";
 import styles from "@/styles/Dashboard.module.scss";
-import { useSession, getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import Header from "@/components/Header/Header";
 import { getIcon } from "@/utils/getIcon";
 import Modal from "@/components/Modal/Modal";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const Dashboard: NextPage = ({ session }: any) => {
+  const router = useRouter();
+
   // Companies Handling
   const {
     data: companies,
@@ -98,7 +101,9 @@ const Dashboard: NextPage = ({ session }: any) => {
                 animate="visible"
                 exit="exit"
                 layout
-                onClick={() => deleteCompany(company.id)}>
+                onClick={() =>
+                  router.push(`/company/${company.name.replace(/\#/g, "%23")}`)
+                }>
                 <div className={styles.companyName}>
                   <div>{company.name}</div>
                   <div>Employees: {company._count.employees}</div>
