@@ -44,14 +44,15 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String     @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?    @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
     companies     Company[]
+    Employee      Employee[]
 }
 
 model VerificationToken {
@@ -78,4 +79,6 @@ model Employee {
     createdAt DateTime @default(now())
     company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
     companyId String
+    manager   User     @relation(fields: [managerId], references: [id], onDelete: Cascade)
+    managerId String
 }

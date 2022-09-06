@@ -1,0 +1,49 @@
+@use "variables" as *;
+
+.wrapper {
+  display: flex;
+  gap: 0.5em;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2em 3em;
+  width: calc(100% - $sidebarWidth);
+  margin-top: $headerHeight;
+  float: right;
+
+  .companyHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .employees {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+
+    .employeeTitle {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .employeesTable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--borderPrimary);
+
+    thead {
+      background-color: var(--backgroundPrimary);
+      color: var(--foregroundPrimary);
+    }
+
+    th,
+    td {
+      padding: 0.5em;
+      border: 1px solid var(--borderPrimary);
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}

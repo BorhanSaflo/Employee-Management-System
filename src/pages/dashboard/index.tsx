@@ -10,48 +10,40 @@ import Modal from "@/components/Modal/Modal";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { DefaultQueryCell } from "@/utils/DefaultQueryCell";
 
 const Dashboard: NextPage = ({ session }: any) => {
   const router = useRouter();
 
   // Companies Handling
-  const {
-    data: companies,
-    refetch: refetchCompanies,
-    isFetching,
-  } = trpc.useQuery(["company.getAll"], {
-    refetchInterval: false,
-  });
-
+  const companiesQuery = trpc.useQuery(["company.getAll"]);
+  const { refetch: refetchCompanies } = companiesQuery;
   const createCompanyMutation = trpc.useMutation(["company.create"]);
   const deleteCompanyMutation = trpc.useMutation(["company.delete"]);
-
-  const deleteCompany = async (id: string) => {
-    await deleteCompanyMutation.mutate(
-      { id },
-      {
-        onSuccess: () => refetchCompanies(),
-      }
-    );
-  };
 
   const createCompany = (name: string) => {
     createCompanyMutation.mutate(
       { name },
-      {
-        onSuccess: () => refetchCompanies(),
-      }
+      { onSuccess: () => refetchCompanies() }
     );
     close();
-    setCompanyName("");
+    setCompanyNameInput("");
   };
+
+  // const deleteCompany = async (id: string) => {
+  //   await deleteCompanyMutation.mutate(
+  //     { id },
+  //     {
+  //       onSuccess: () => refetchCompanies(),
+  //     }
+  //   );
+  // };
 
   //Modal
   const [modalOpen, setModalOpen] = useState(false);
   const close = () => setModalOpen(false);
   const open = () => setModalOpen(true);
-
-  const [companyName, setCompanyName] = useState("");
+  const [companyNameInput, setCompanyNameInput] = useState("");
 
   // Animation
   const itemTransition = {
@@ -92,35 +84,45 @@ const Dashboard: NextPage = ({ session }: any) => {
         <h1 className={styles.title}>Companies</h1>
         <ul className={styles.companiesContainer}>
           <AnimatePresence>
-            {companies?.map((company) => (
-              <motion.li
-                key={company.id}
-                className={styles.company}
-                variants={itemTransition}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                layout
-                onClick={() =>
-                  router.push(`/company/${company.name.replace(/\#/g, "%23")}`)
-                }>
-                <div className={styles.companyName}>
-                  <div>{company.name}</div>
-                  <div>Employees: {company._count.employees}</div>
-                </div>
-              </motion.li>
-            ))}
-            <motion.li
-              className={styles.company}
-              variants={itemTransition}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              layout
-              onClick={() => (modalOpen ? close() : open())}>
-              <AddIcon className={styles.addIcon} />
-              <span>Add Company</span>
-            </motion.li>
+            <DefaultQueryCell
+              query={companiesQuery}
+              loading={() => (
+                <>
+                  <div>Loading...</div>
+                </>
+              )}
+              success={({ data }) => (
+                <>
+                  {data?.map((company) => (
+                    <motion.li
+                      key={company.id}
+                      className={styles.company}
+                      variants={itemTransition}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      layout
+                      onClick={() => router.push(`/company/${company.id}`)}>
+                      <div className={styles.companyName}>
+                        <div>{company.name}</div>
+                        <div>Employees: {company._count.employees}</div>
+                      </div>
+                    </motion.li>
+                  ))}
+                  <motion.li
+                    className={styles.company}
+                    variants={itemTransition}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    layout
+                    onClick={() => (modalOpen ? close() : open())}>
+                    <AddIcon className={styles.addIcon} />
+                    <span>Add Company</span>
+                  </motion.li>
+                </>
+              )}
+            />
           </AnimatePresence>
         </ul>
         <Modal status={modalOpen} handleClose={close} title={"Add Company"}>
@@ -128,16 +130,16 @@ const Dashboard: NextPage = ({ session }: any) => {
             Company Name
             <input
               type="text"
-              value={companyName}
+              value={companyNameInput}
               onChange={(e) => {
-                setCompanyName(e.target.value);
+                setCompanyNameInput(e.target.value);
               }}
             />
           </label>
           <div className="centerRow">
             <button
               className="button"
-              onClick={() => createCompany(companyName)}>
+              onClick={() => createCompany(companyNameInput)}>
               Add Company
             </button>
           </div>

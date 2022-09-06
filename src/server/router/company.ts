@@ -2,17 +2,14 @@ import { z } from "zod";
 import { createProtectedRouter } from "./protected-router";
 import { TRPCError } from "@trpc/server";
 
-// Example router with queries that can only be hit if the user requesting is signed in
 export const companyRouter = createProtectedRouter()
-  .query("getSession", {
-    resolve({ ctx }) {
-      return ctx.session;
-    },
-  })
   .query("getAll", {
     async resolve({ ctx }) {
       try {
         return await ctx.prisma.company.findMany({
+          where: {
+            userId: ctx.session?.user.id,
+          },
           select: {
             id: true,
             name: true,
@@ -31,21 +28,29 @@ export const companyRouter = createProtectedRouter()
       }
     },
   })
-  .query("byName", {
+  .query("byId", {
     input: z.object({
-      name: z.string(),
+      id: z.string(),
     }),
     async resolve({ ctx, input }) {
       const company = await ctx.prisma.company.findFirst({
         where: {
           userId: ctx.session.user.id,
-          name: input.name,
+          id: input.id,
+        },
+        include: {
+          employees: true,
+          _count: {
+            select: {
+              employees: true,
+            },
+          },
         },
       });
       if (!company) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: `No company with the name '${input.name}' found`,
+          message: `No company with the id '${input.id}' found`,
         });
       }
       return company;

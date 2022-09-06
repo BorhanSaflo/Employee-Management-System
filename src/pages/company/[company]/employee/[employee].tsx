@@ -2,12 +2,17 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
 import { DefaultQueryCell } from "@/utils/DefaultQueryCell";
+import styles from "@/styles/Company.module.scss";
 import Head from "next/head";
 import Header from "@/components/Header/Header";
 
 export default function Company() {
-  const name = useRouter().query.companyName as string;
-  const companyQuery = trpc.useQuery(["company.byName", { name }]);
+  const companyId = useRouter().query.company as string;
+  const employeeId = useRouter().query.employee as string;
+  const companyQuery = trpc.useQuery([
+    "employee.byId",
+    { id: employeeId, companyId: companyId },
+  ]);
 
   return (
     <>
@@ -25,13 +30,14 @@ export default function Company() {
         success={({ data }) => (
           <>
             <Head>
-              <title>{data.name}</title>
+              <title>{`${data.firstName} ${data.lastName}`}</title>
             </Head>
 
             <main>
-              <h1>{data.name}</h1>
-              <p>{data.name}</p>
-              <em>Created {data.createdAt.toLocaleDateString()}</em>
+              <div className={styles.wrapper}>
+                <h1>{`${data.firstName} ${data.lastName}`}</h1>
+                <em>Joined {data.createdAt.toLocaleDateString()}</em>
+              </div>
             </main>
           </>
         )}
