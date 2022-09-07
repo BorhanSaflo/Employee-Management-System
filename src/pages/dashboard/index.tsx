@@ -3,6 +3,7 @@ import Head from "next/head";
 import { trpc } from "@/utils/trpc";
 import Sidebar from "@/components/Sidebar";
 import styles from "@/styles/Dashboard.module.scss";
+import modalStyles from "@/styles/Modal.module.scss";
 import { getSession } from "next-auth/react";
 import Header from "@/components/Header/Header";
 import { getIcon } from "@/utils/getIcon";
@@ -26,7 +27,7 @@ const Dashboard: NextPage = ({ session }: any) => {
       { name },
       { onSuccess: () => refetchCompanies() }
     );
-    close();
+    closeModal();
     setCompanyNameInput("");
   };
 
@@ -40,9 +41,8 @@ const Dashboard: NextPage = ({ session }: any) => {
   // };
 
   //Modal
-  const [modalOpen, setModalOpen] = useState(false);
-  const close = () => setModalOpen(false);
-  const open = () => setModalOpen(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = () => setIsModalOpen(false);
   const [companyNameInput, setCompanyNameInput] = useState("");
 
   // Animation
@@ -116,7 +116,7 @@ const Dashboard: NextPage = ({ session }: any) => {
                     animate="visible"
                     exit="exit"
                     layout
-                    onClick={() => (modalOpen ? close() : open())}>
+                    onClick={() => setIsModalOpen(!isModalOpen)}>
                     <AddIcon className={styles.addIcon} />
                     <span>Add Company</span>
                   </motion.li>
@@ -125,8 +125,11 @@ const Dashboard: NextPage = ({ session }: any) => {
             />
           </AnimatePresence>
         </ul>
-        <Modal status={modalOpen} handleClose={close} title={"Add Company"}>
-          <label className={styles.label} htmlFor="companyName">
+        <Modal
+          status={isModalOpen}
+          handleClose={closeModal}
+          title={"Add Company"}>
+          <label className={modalStyles.label}>
             Company Name
             <input
               type="text"

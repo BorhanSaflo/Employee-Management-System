@@ -3,9 +3,12 @@ import { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
 import { DefaultQueryCell } from "@/utils/DefaultQueryCell";
 import styles from "@/styles/Company.module.scss";
+import modalStyles from "@/styles/Modal.module.scss";
 import Head from "next/head";
 import Header from "@/components/Header/Header";
 import Sidebar from "@/components/Sidebar";
+import { useState } from "react";
+import Modal from "@/components/Modal/Modal";
 
 export default function Company() {
   const router = useRouter();
@@ -19,6 +22,9 @@ export default function Company() {
       { firstName, lastName, companyId },
       { onSuccess: () => companyQuery.refetch() }
     );
+    closeModal();
+    setFirstNameInput("");
+    setLastNameInput("");
   };
 
   const deleteCompany = () =>
@@ -28,6 +34,12 @@ export default function Company() {
         onSuccess: () => router.push("/dashboard"),
       }
     );
+
+  //Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = () => setIsModalOpen(false);
+  const [firstNameInput, setFirstNameInput] = useState("");
+  const [lastNameInput, setLastNameInput] = useState("");
 
   return (
     <>
@@ -63,20 +75,21 @@ export default function Company() {
                     <h2>Employees</h2>
                     <button
                       className="button"
-                      onClick={() => createEmployee("John", "Doe")}>
+                      onClick={() => setIsModalOpen(!isModalOpen)}>
                       Add Employee
                     </button>
                   </div>
                   <table className={styles.employeesTable}>
                     <thead>
                       <tr>
+                        <th>#</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Joined</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {data.employees.map((employee) => (
+                      {data.employees.map((employee, index) => (
                         <tr
                           key={employee.id}
                           onClick={() =>
@@ -84,6 +97,7 @@ export default function Company() {
                               `/company/${companyId}/employee/${employee.id}`
                             )
                           }>
+                          <td>{index + 1}</td>
                           <td>{employee.firstName}</td>
                           <td>{employee.lastName}</td>
                           <td>{employee.createdAt.toLocaleDateString()}</td>
@@ -94,6 +108,40 @@ export default function Company() {
                   <p>Total Employees: {data._count.employees}</p>
                 </div>
               </div>
+              <Modal
+                status={isModalOpen}
+                handleClose={closeModal}
+                title={"Add Employee"}>
+                <label className={modalStyles.label}>
+                  First Name
+                  <input
+                    type="text"
+                    value={firstNameInput}
+                    onChange={(e) => {
+                      setFirstNameInput(e.target.value);
+                    }}
+                  />
+                </label>
+                <label className={modalStyles.label}>
+                  Last Name
+                  <input
+                    type="text"
+                    value={lastNameInput}
+                    onChange={(e) => {
+                      setLastNameInput(e.target.value);
+                    }}
+                  />
+                </label>
+                <div className="centerRow">
+                  <button
+                    className="button"
+                    onClick={() =>
+                      createEmployee(firstNameInput, lastNameInput)
+                    }>
+                    Add Employee
+                  </button>
+                </div>
+              </Modal>
             </main>
           </>
         )}
