@@ -1,7 +1,12 @@
 import { IconType } from "react-icons";
 import { HiPlus } from "react-icons/hi";
 import { MdAdd, MdDashboard } from "react-icons/md";
-import { BsFillPersonLinesFill, BsXLg } from "react-icons/bs";
+import {
+  BsFillCalendarFill,
+  BsFillPersonLinesFill,
+  BsFillTrashFill,
+  BsXLg,
+} from "react-icons/bs";
 import { GrStatusUnknown } from "react-icons/gr";
 import { GoChevronDown } from "react-icons/go";
 import { FaUsers } from "react-icons/fa";
@@ -16,6 +21,8 @@ const icons = new Map<string, IconType>([
   ["signOut", BiLogIn],
   ["add", MdAdd],
   ["close", BsXLg],
+  ["calendar", BsFillCalendarFill],
+  ["trash", BsFillTrashFill],
 ]);
 
 export const getIcon = (name: string) => {

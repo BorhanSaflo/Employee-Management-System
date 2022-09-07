@@ -2,7 +2,7 @@
 
 .wrapper {
   display: flex;
-  gap: 0.5em;
+  gap: 1.5em;
   flex-direction: column;
   align-items: flex-start;
   padding: 2em 3em;
@@ -14,6 +14,62 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
+    .companyNameContainer {
+      .title {
+        color: var(--foregroundTertiary);
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .companyName {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--foregroundSecondary);
+      }
+    }
+  }
+
+  .sectionRow {
+    width: 100%;
+    display: flex;
+    gap: 1em;
+
+    .infoBox {
+      @include flexCenter;
+      gap: 1.5em;
+      border-radius: 5px;
+      border: 1px solid var(--borderPrimary);
+      background-color: var(--backgroundTertiary);
+      padding: 1em;
+      width: 12em;
+      transition: background-color 0.1s, scale 0.1s;
+      font-size: 1.3em;
+      font-weight: bold;
+      box-shadow: 0 0.3em 0.5em -0.125em rgba(10, 10, 10, 0.1);
+
+      .infoBoxIcon {
+        color: var(--foregroundTertiary);
+      }
+
+      .infoBoxText {
+        @include flexCenter;
+        flex-direction: column;
+        gap: 0.25em;
+
+        .infoBoxTitle {
+          color: var(--foregroundTertiary);
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+      }
+
+      &:hover {
+        background-color: var(--backgroundPrimary);
+        scale: 1.02;
+      }
+    }
   }
 
   .employees {
@@ -21,29 +77,68 @@
     flex-direction: column;
     gap: 1em;
     width: 100%;
+    border-radius: 5px;
 
     .employeeTitle {
       display: flex;
+      align-items: center;
       justify-content: space-between;
     }
-  }
 
-  .employeesTable {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid var(--borderPrimary);
-
-    thead {
-      background-color: var(--backgroundPrimary);
-      color: var(--foregroundPrimary);
-    }
-
-    th,
-    td {
-      padding: 0.5em;
+    .tableWrapper {
+      overflow: hidden;
+      border-radius: 5px;
       border: 1px solid var(--borderPrimary);
-      text-align: center;
-      cursor: pointer;
+
+      .employeesTable {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+
+        tr {
+          border-bottom: 1px solid var(--borderPrimary);
+        }
+
+        th,
+        td {
+          text-align: left;
+          padding: 0.75em 2em;
+        }
+
+        thead {
+          tr {
+            background-color: var(--backgroundTertiary);
+            th {
+              color: var(--foregroundTertiary);
+              font-weight: 500;
+              font-size: 0.9em;
+            }
+          }
+        }
+
+        tbody {
+          transition: background-color 0.1s;
+          tr {
+            cursor: pointer;
+
+            &:hover {
+              background-color: var(--backgroundPrimary);
+            }
+
+            &:last-child {
+              border-bottom: none;
+            }
+
+            .primary {
+              font-weight: 500;
+            }
+
+            .secondary {
+              color: var(--foregroundTertiary);
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -4,8 +4,8 @@ $secondaryDark: hsl(221, 20%, 16%);
 $tertiaryDark: hsl(221, 22%, 14%);
 
 $primaryLight: #f9fafb;
-$secondaryLight: #f3f4f6;
-$tertiaryLight: #e5e7eb;
+$secondaryLight: #eeeff2;
+$tertiaryLight: #d0d4dc;
 
 //Screen Sizes
 $xl: 1279px;
@@ -57,12 +57,12 @@ $footerHeight: 100px;
 @mixin button($foreground, $background, $backgroundSecondary) {
   @include flexCenter;
   @include noDrag;
-  gap: 0.4em;
+  gap: 0.5em;
   cursor: pointer;
   border: $foreground 1px solid;
   border-radius: 5px;
   font-size: 1em;
-  padding: 0.5em 1em;
+  padding: 0.5em 0.8em;
   transition: background-color 0.25s ease;
   text-align: center;
   background-color: $background;

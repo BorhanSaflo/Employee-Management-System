@@ -62,7 +62,11 @@ a {
 }
 
 .dangerButton {
-  @include button(#ef4444, rgba(#f87171, 15%), rgba(#f87171, 25%));
+  @include button(#ef4444, rgba(#f87171, 10%), rgba(#f87171, 20%));
+}
+
+.successButton {
+  @include button(#10b981, rgba(#34d399, 10%), rgba(#34d399, 20%));
 }
 
 .centerRow {
