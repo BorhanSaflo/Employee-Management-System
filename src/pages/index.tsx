@@ -17,7 +17,7 @@ const Home: NextPage = () => {
       <Header />
       <main>
         <div className={styles.wrapper}>
-          <div>Hello World</div>
+          <div>Home Page</div>
         </div>
       </main>
       <Footer />

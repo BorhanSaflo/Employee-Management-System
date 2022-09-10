@@ -15,6 +15,14 @@ export const employeeRouter = createProtectedRouter()
           companyId: input.companyId,
           managerId: ctx.session.user.id,
         },
+        include: {
+          tasks: true,
+          _count: {
+            select: {
+              tasks: true,
+            },
+          },
+        },
       });
       if (!employee) {
         throw new TRPCError({
@@ -49,5 +57,22 @@ export const employeeRouter = createProtectedRouter()
         },
       });
       return employee;
+    },
+  })
+  .mutation("delete", {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      try {
+        await ctx.prisma.employee.delete({
+          where: {
+            id: input.id,
+          },
+        });
+        return { success: true };
+      } catch (error) {
+        console.error(error);
+      }
     },
   });

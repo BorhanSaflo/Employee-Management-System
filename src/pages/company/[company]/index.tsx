@@ -134,6 +134,7 @@ export default function Company() {
                           <th>First Name</th>
                           <th>Last Name</th>
                           <th>Joined</th>
+                          <th>Tasks</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -158,6 +159,9 @@ export default function Company() {
                                 day: "numeric",
                                 year: "numeric",
                               })}
+                            </td>
+                            <td className={styles.secondary}>
+                              {employee._count.tasks}
                             </td>
                           </tr>
                         ))}

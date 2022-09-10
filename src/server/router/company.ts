@@ -39,7 +39,19 @@ export const companyRouter = createProtectedRouter()
           id: input.id,
         },
         include: {
-          employees: true,
+          employees: {
+            select: {
+              firstName: true,
+              lastName: true,
+              id: true,
+              createdAt: true,
+              _count: {
+                select: {
+                  tasks: true,
+                },
+              },
+            },
+          },
           _count: {
             select: {
               employees: true,

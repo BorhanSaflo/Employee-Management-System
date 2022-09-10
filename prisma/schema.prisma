@@ -81,4 +81,15 @@ model Employee {
     companyId String
     manager   User     @relation(fields: [managerId], references: [id], onDelete: Cascade)
     managerId String
+    tasks     Task[]
+}
+
+model Task {
+    id          String   @id @default(cuid())
+    title       String
+    description String?
+    createdAt   DateTime @default(now())
+    employee    Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+    employeeId  String
+    completed   Boolean  @default(false)
 }

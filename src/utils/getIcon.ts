@@ -5,6 +5,7 @@ import {
   BsFillCalendarFill,
   BsFillPersonLinesFill,
   BsFillTrashFill,
+  BsJournalCheck,
   BsXLg,
 } from "react-icons/bs";
 import { GrStatusUnknown } from "react-icons/gr";
@@ -23,6 +24,7 @@ const icons = new Map<string, IconType>([
   ["close", BsXLg],
   ["calendar", BsFillCalendarFill],
   ["trash", BsFillTrashFill],
+  ["taskList", BsJournalCheck],
 ]);
 
 export const getIcon = (name: string) => {

@@ -76,6 +76,19 @@
             border: 1px solid #eaeaea;
           }
         }
+
+        textarea {
+          width: 100%;
+          padding: 0.5em 1em;
+          border-radius: 5px;
+          border: 1px solid var(--borderPrimary);
+          background-color: var(--backgroundTertiary);
+
+          &:focus {
+            outline: none;
+            border: 1px solid #eaeaea;
+          }
+        }
       }
     }
   }
