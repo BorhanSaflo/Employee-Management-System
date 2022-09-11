@@ -119,8 +119,8 @@ export default function Company() {
                     </div>
                   </div>
                 </div>
-                <div className={styles.employees}>
-                  <div className={styles.employeeTitle}>
+                <div className={styles.tasks}>
+                  <div className={styles.tasksTitle}>
                     <h2>Tasks</h2>
                     <button
                       className="successButton"
@@ -134,10 +134,11 @@ export default function Company() {
                     </button>
                   </div>
                   <div className={styles.tableWrapper}>
-                    <table className={styles.employeesTable}>
+                    <table className={styles.tasksTable}>
                       <thead>
                         <tr>
                           <th>#</th>
+                          <th>Status</th>
                           <th>Task</th>
                           <th>Description</th>
                           <th>Created On</th>
@@ -147,6 +148,15 @@ export default function Company() {
                         {data.tasks.map((task, index) => (
                           <tr key={task.id}>
                             <td className={styles.secondary}>{index + 1}</td>
+                            <td className={styles.secondary}>
+                              {task.completed ? (
+                                <span className={styles.completed}>
+                                  Completed
+                                </span>
+                              ) : (
+                                <span className={styles.pending}>Pending</span>
+                              )}
+                            </td>
                             <td className={styles.primary}>{task.title}</td>
                             <td className={styles.secondary}>
                               {task.description}

@@ -72,14 +72,14 @@
     }
   }
 
-  .employees {
+  .tasks {
     display: flex;
     flex-direction: column;
     gap: 1em;
     width: 100%;
     border-radius: 5px;
 
-    .employeeTitle {
+    .tasksTitle {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -90,7 +90,7 @@
       border-radius: 5px;
       border: 1px solid var(--borderPrimary);
 
-      .employeesTable {
+      .tasksTable {
         width: 100%;
         table-layout: fixed;
         border-collapse: collapse;
