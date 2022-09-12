@@ -64,12 +64,13 @@ model VerificationToken {
 }
 
 model Company {
-    id        String     @id @default(cuid())
-    name      String
-    createdAt DateTime   @default(now())
-    user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId    String
-    employees Employee[]
+    id         String     @id @default(cuid())
+    name       String
+    createdAt  DateTime   @default(now())
+    user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId     String
+    employees  Employee[]
+    themeColor String?
 }
 
 model Employee {

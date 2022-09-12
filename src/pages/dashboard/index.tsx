@@ -20,30 +20,22 @@ const Dashboard: NextPage = ({ session }: any) => {
   const companiesQuery = trpc.useQuery(["company.getAll"]);
   const { refetch: refetchCompanies } = companiesQuery;
   const createCompanyMutation = trpc.useMutation(["company.create"]);
-  const deleteCompanyMutation = trpc.useMutation(["company.delete"]);
 
-  const createCompany = (name: string) => {
+  const createCompany = (name: string, color?: string) => {
     createCompanyMutation.mutate(
-      { name },
+      { name, color },
       { onSuccess: () => refetchCompanies() }
     );
     closeModal();
     setCompanyNameInput("");
+    setCompanyThemeColor("");
   };
-
-  // const deleteCompany = async (id: string) => {
-  //   await deleteCompanyMutation.mutate(
-  //     { id },
-  //     {
-  //       onSuccess: () => refetchCompanies(),
-  //     }
-  //   );
-  // };
 
   //Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
   const [companyNameInput, setCompanyNameInput] = useState("");
+  const [companyThemeColor, setCompanyThemeColor] = useState("");
 
   // Animation
   const itemTransition = {
@@ -97,6 +89,13 @@ const Dashboard: NextPage = ({ session }: any) => {
                     <motion.li
                       key={company.id}
                       className={styles.company}
+                      style={
+                        company.themeColor
+                          ? {
+                              backgroundColor: company.themeColor!,
+                            }
+                          : {}
+                      }
                       variants={itemTransition}
                       initial="hidden"
                       animate="visible"
@@ -139,10 +138,20 @@ const Dashboard: NextPage = ({ session }: any) => {
               }}
             />
           </label>
+          <label className={modalStyles.label}>
+            Color
+            <input
+              type="color"
+              value={companyThemeColor}
+              onChange={(e) => setCompanyThemeColor(e.target.value)}
+            />
+          </label>
           <div className="centerRow">
             <button
               className="button"
-              onClick={() => createCompany(companyNameInput)}>
+              onClick={() =>
+                createCompany(companyNameInput, companyThemeColor)
+              }>
               Add Company
             </button>
           </div>
