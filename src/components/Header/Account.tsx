@@ -12,7 +12,7 @@ interface Props {
 
 function Account({ children, username, userProfilePicture }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const RightArrow = getIcon("downArrow");
+  const DownArrow = getIcon("downArrow");
 
   const menuAnimation = {
     enter: {
@@ -42,7 +42,7 @@ function Account({ children, username, userProfilePicture }: Props) {
           alt="profile"
         />
         <span>{username}</span>
-        <RightArrow />
+        <DownArrow />
       </div>
       <AnimatePresence>
         {isOpen && (

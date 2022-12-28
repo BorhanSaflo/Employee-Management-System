@@ -39,9 +39,11 @@
     aspect-ratio: 1.5;
     border-radius: 5px;
     border: 1px solid var(--borderPrimary);
+    font-size: 1.4rem;
+    font-weight: bold;
     cursor: pointer;
     background-color: var(--backgroundSecondary);
-    box-shadow: 0 0.3em 0.5em -0.125em rgba(10, 10, 10, 0.1);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 5px;
     transition: background-color 0.25s ease, scale 0.25s ease;
 
     .addIcon {
@@ -49,9 +51,26 @@
       height: 30%;
     }
 
+    .companyName {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5em;
+
+      .employeesCounterContainer {
+        @include flexCenter;
+        gap: 0.5em;
+        font-size: 1.2rem;
+      }
+    }
+
     &:hover {
       background-color: var(--backgroundPrimary);
       scale: 1.02;
     }
+  }
+
+  .addCompany {
+    background-color: var(--backgroundTertiary);
   }
 }

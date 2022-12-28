@@ -71,6 +71,7 @@ model Company {
     userId     String
     employees  Employee[]
     themeColor String?
+    textColor  String?
 }
 
 model Employee {

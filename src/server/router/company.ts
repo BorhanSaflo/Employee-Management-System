@@ -14,6 +14,7 @@ export const companyRouter = createProtectedRouter()
             id: true,
             name: true,
             themeColor: true,
+            textColor: true,
             _count: {
               select: {
                 employees: true,
@@ -71,8 +72,9 @@ export const companyRouter = createProtectedRouter()
   })
   .mutation("create", {
     input: z.object({
-      name: z.string(),
-      color: z.string().optional(),
+      name: z.string().min(1).max(20),
+      themeColor: z.string().optional(),
+      textColor: z.string().optional(),
     }),
     async resolve({ ctx, input }) {
       try {
@@ -84,7 +86,8 @@ export const companyRouter = createProtectedRouter()
                 id: ctx.session.user.id,
               },
             },
-            themeColor: input.color,
+            themeColor: input.themeColor,
+            textColor: input.textColor,
           },
         });
         return { success: true };

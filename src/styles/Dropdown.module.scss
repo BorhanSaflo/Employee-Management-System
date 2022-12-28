@@ -1,0 +1,46 @@
+@use "variables" as *;
+
+.container {
+  @include flexCenter;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.5em;
+  position: absolute;
+  background-color: var(--backgroundSecondary);
+  padding: 0.2em 0.2em;
+  border-radius: 5px;
+  border: 1px solid var(--borderPrimary);
+  align-items: stretch;
+}
+
+.optionContainer {
+  @include noDrag;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2em 0.2em;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--backgroundTertiary);
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+  }
+
+  .optionColor {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--borderPrimary);
+    border-radius: $borderRadius;
+  }
+}
+
+.dropdownWrapper {
+  position: relative;
+  width: 100%;
+}
